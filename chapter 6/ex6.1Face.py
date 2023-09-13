@@ -1,8 +1,9 @@
 #Example 6.1 OpenCV face detection
 import cv2
-img = cv2.imread('face0.jpg')
+
+img = cv2.imread('face0.jpeg')
 cascade_classifier = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-gray =cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 faces= cascade_classifier.detectMultiScale(gray, minNeighbors=5)
 
 for (x,y,w,h) in faces:

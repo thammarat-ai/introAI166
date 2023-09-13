@@ -7,7 +7,7 @@ video_capture = cv2.VideoCapture(0)
 
 face0_image = face_recognition.load_image_file("face0.jpeg")
 face1_image = face_recognition.load_image_file("face1.jpeg")
-face2_image = face_recognition.load_image_file("face2.jpeg")
+face2_image = face_recognition.load_image_file("face2.jpg")
 face0_encoding = face_recognition.face_encodings(face0_image)[0]
 face1_encoding = face_recognition.face_encodings(face1_image)[0]
 face2_encoding = face_recognition.face_encodings(face2_image)[0]
@@ -26,7 +26,8 @@ known_face_names = [
 
 while True:
     ret, frame = video_capture.read()
-    rgb_frame = frame[:, :, ::-1]
+    # rgb_frame = frame[:, :, ::-1]
+    rgb_frame = np.ascontiguousarray(frame[:, :, ::-1])
 
     face_locations = face_recognition.face_locations(rgb_frame)
     face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)

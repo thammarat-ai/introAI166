@@ -102,7 +102,7 @@ def TrackImages(frame):
         if(conf < 50):
             person_to_show = person # only shows a recognized person, useful when multiple faces are detected
 
-    return frame, person_to_showcount = 0			
+    return frame, person_to_showcount	
 def main():
     global register,sampleNum,dataPath,name,Id,course,recognizeFrame
     sg.ChangeLookAndFeel('LightGreen')
