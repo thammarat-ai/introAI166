@@ -1,6 +1,7 @@
 #Example 6.11 Image Face Recognition with model trained in OpenCV
 
 #pip install opencv-contrib-python
+
 import os
 import cv2
 import numpy as np

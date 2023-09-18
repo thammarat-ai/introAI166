@@ -1,12 +1,13 @@
 #Example 6.10 Train a Face Recognition model with OpenCV
 
 #pip install opencv-contrib-python
+
 import os
 import cv2
 import numpy as np
 import os
 
-recognizer=cv2.face.LBPHFaceRecognizer_create()
+recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 imagePaths = ["face0.jpeg", "face1.jpeg", "face2.jpeg"]
 

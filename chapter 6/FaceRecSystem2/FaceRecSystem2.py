@@ -48,10 +48,10 @@ def getFaces(path):
 
 def createImages(frame,count):		 
     global dataPath,name,Id
-    rgb_frame = frame[:, :, ::-1]
+    rgb_small_frame = np.ascontiguousarray(frame[:, :, ::-1])
 
-    face_locations = face_recognition.face_locations(rgb_frame)
-    face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+    face_locations = face_recognition.face_locations(rgb_small_frame)
+    face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         cv2.imwrite(dataPath+"\\"+name +"."+Id +'.'+ str(count) + ".jpg", frame)
@@ -75,10 +75,11 @@ def writeDatabase(databaseFile,row):
 # For testing phase 
 def recogImages(frame,known_face_names, known_face_encodings): 
     global recognizer,detector
-    rgb_frame = frame[:, :, ::-1]
+    # rgb_frame = frame[:, :, ::-1]
+    rgb_small_frame = np.ascontiguousarray(frame[:, :, ::-1])
     df = pd.read_csv(databaseFile,delimiter=',')
-    face_locations = face_recognition.face_locations(rgb_frame)
-    face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
+    face_locations = face_recognition.face_locations(rgb_small_frame)
+    face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
     name = "Unknown"
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)

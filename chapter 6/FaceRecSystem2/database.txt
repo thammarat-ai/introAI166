@@ -1,2 +1,6 @@
-Id,Name,Course
-001,Perry,EEE
+Id,Name,Course
+
+
+001,Thammarat,CS
+
+

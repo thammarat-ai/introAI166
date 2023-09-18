@@ -1,5 +1,4 @@
-#Example 6.x Face Recognition System OpenCV
-#pip install opencv-contrib-python
+#Example 6.13 Face Recognition System OpenCV
 import cv2
 import numpy as np
 import PySimpleGUI as sg
@@ -81,13 +80,14 @@ def TrackImages(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = detector.detectMultiScale(gray, 1.2, 5)
     person = ""
+    person_to_show = ""
     for(x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (225, 0, 0), 2)
         Id, conf = recognizer.predict(gray[y:y + h, x:x + w])
-        #print("ID:" + str(Id) + " conf:" + str(conf))
-        #print(df['Id'] )
+        print("ID:" + str(Id) + " conf:" + str(conf))
+        print(df['Id'] )
 
-	#If confidence is less than 100 ==>"0" perfect match
+	    #If confidence is less than 100 ==>"0" perfect match
         if(conf < 50):
             person = df.loc[df['Id'] == Id]['Name'].values
             cr = df.loc[df['Id'] == Id]['Course'].values
@@ -96,18 +96,21 @@ def TrackImages(frame):
         else:
             Id ='Unknown'
             person = str(Id)
+        
         person = (str(person)+" " +str(int(conf))+"%")
         #cv2.putText(frame, person, (x, y + h), 
-	#            font, 1, (255, 255, 255), 2)
-    return frame,person
-count = 0			
+	    #            font, 1, (255, 255, 255), 2)
+        if(conf < 50):
+            person_to_show = person # only shows a recognized person, useful when multiple faces are detected
+
+    return frame, person_to_show
 def main():
     global register,sampleNum,dataPath,name,Id,course,recognizeFrame
     sg.ChangeLookAndFeel('LightGreen')
 
     # define the window layout
     leftpanel = [
-                 [sg.Text('Face Recognition', size=(30, 1), justification='center', font='Helvetica 20',key='title')],
+                 [sg.Text('Face Recognition', size=(20, 1), justification='center', font='Helvetica 20',key='title')],
                  [sg.Image(filename='', key='image')],
                 ]
     rightpanel =[[sg.Text('Id:', size =(10, 1))],
@@ -148,13 +151,14 @@ def main():
         Id = values["Id"]
         course = values["course"]
         
+        
         ret, frame = cap.read()
 
         if register:
             createImages(frame,count)
             info = "Saving "+str(count)
             count = count + 1
-            if count > sampleNum:
+            if count > sampleNum:  # for each student, we take multiple samples
                 row = [Id, name,course]
                 info = writeDatabase(databaseFile,row)
                 register = False
