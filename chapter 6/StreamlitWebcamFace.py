@@ -11,9 +11,9 @@ cascade_classifier = cv2.CascadeClassifier('haarcascade_frontalface_default.xml'
 @st.cache(allow_output_mutation=True)
 def get_cap():
     #from webcam
-#    return cv2.VideoCapture(0)
+    return cv2.VideoCapture(0)
     #from a video file
-    return cv2.VideoCapture('Roller Coaster.mp4')
+    # return cv2.VideoCapture('Roller Coaster.mp4')
 
 cap = get_cap()
 
@@ -26,7 +26,7 @@ mn=st.sidebar.slider('minNeighbors:', 5, 20, 5)
 msize=st.sidebar.slider('minSize:', 10, 200, 30)
 
 while True:
-ret, frame = cap.read()
+    ret, frame = cap.read()
     # Stop the program if reached end of video
     if not ret:
         cv2.waitKey(3000)

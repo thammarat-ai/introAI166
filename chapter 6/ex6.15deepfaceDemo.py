@@ -2,19 +2,19 @@
 from deepface import DeepFace
 
 #Detect Faces ==========================================================
-detected_face = DeepFace.detectFace("oldwoman.jpeg")
+detected_face = DeepFace.extract_faces("oldwoman.jpeg")
+
 
 #Verify images==========================================================
-result = DeepFace.verify("face11a.jpeg", "face11b.jpeg")
+result = DeepFace.verify("face11a.jpeg", "face11a.jpeg")
 print("Is verified: ", result["verified"])
 
-# Get age, gender, race, emotion =======================================
-#from deepface import DeepFace
-#demography = DeepFace.analyze("perry1.jpg") #passing nothing as 2nd argument will find everything
-#demography = DeepFace.analyze("face5.jpeg", ['age', 'gender', 'race', 'emotion']) #identical to the line above
-demography = DeepFace.analyze("face10.jpeg") #passing nothing as 2nd argument will find everything
+# # Get age, gender, race, emotion =======================================
+# #from deepface import DeepFace
+demography = DeepFace.analyze("perry1.jpg")
 
-print("Age: ", int(demography["age"]))
-print("Emotion: ", demography["dominant_emotion"])
-print("Gender: ", demography["gender"])
-print("Race: ", demography["dominant_race"])
+
+print("Age: ", demography[0]['age'])
+print("Emotion: ", demography[0]['dominant_emotion'])
+print("Gender: ", demography[0]['dominant_gender'])
+print("Race: ", demography[0]['dominant_race'])
